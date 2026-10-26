@@ -1,5 +1,6 @@
 import { calculateInstallment, calculatePendingBalance, formatBalance, formatMoney, formatCoefficient, formatPesos, parseBalance } from "./calculation.js";
 import { createRatesReader } from "./rates-client.js";
+import { formatAmountInput, deleteAtGroupSeparator } from "./amount-input.js";
 
 const byId = (id) => document.getElementById(id);
 const balance = byId("balance");
@@ -81,7 +82,6 @@ function render() {
   byId("retry").disabled = loading;
   byId("retry").querySelector("svg").classList.toggle("spin", loading);
   byId("retry-label").textContent = loading ? "Actualizando…" : "Reintentar";
-  byId("rounding-note").hidden = Boolean(error);
   byId("source-dot").classList.toggle("pending", loading);
   byId("source-dot").classList.toggle("unavailable", !loading && Boolean(error));
   byId("source-label").textContent = loading ? "Leyendo tabla…" : error ? "Planilla oficial sin acceso" : data?.sourceLabel ?? "Planilla oficial de Drive";
@@ -91,7 +91,24 @@ function render() {
 }
 
 for (const input of [balance, totalPrice, advance]) {
-  input.addEventListener("input", render);
+  const applyEdit = (edit) => {
+    if (input.value !== edit.value) {
+      input.value = edit.value;
+      input.setSelectionRange(edit.start, edit.end);
+    }
+    render();
+  };
+  const formatWhileTyping = (event) => {
+    if (event.isComposing) return;
+    applyEdit(formatAmountInput(input.value, input.selectionStart, input.selectionEnd, event.inputType, event.data));
+  };
+  input.addEventListener("input", formatWhileTyping);
+  input.addEventListener("compositionend", formatWhileTyping);
+  input.addEventListener("beforeinput", (event) => {
+    if (event.isComposing || !event.cancelable) return;
+    const edit = deleteAtGroupSeparator(input.value, input.selectionStart, input.selectionEnd, event.inputType);
+    if (edit) { event.preventDefault(); applyEdit(edit); }
+  });
   input.addEventListener("blur", () => {
     const cents = parseBalance(input.value);
     if (cents !== null) input.value = formatBalance(cents);
