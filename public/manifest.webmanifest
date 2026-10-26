@@ -1,0 +1,13 @@
+{
+  "id": "/",
+  "name": "Calculadora de cuotas de Royal Prestige - Lista Sep2026",
+  "short_name": "Cuotas Royal Prestige",
+  "description": "Saldo a financiar y valor de cada cuota según la planilla oficial.",
+  "lang": "es-AR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

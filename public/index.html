@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Calculadora de cuotas de Royal Prestige - Lista Sep2026</title>
+  <meta name="description" content="Ingresá el saldo a financiar y elegí las cuotas. Porcentajes de la planilla oficial de Royal Prestige.">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Cuotas Royal Prestige">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <main class="calculator-page">
+    <div class="calculator">
+      <header class="intro">
+        <span class="app-mark" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14v4M8 18h.01M12 18h.01"/></svg></span>
+        <h1>Calculadora de cuotas</h1>
+        <p>Ingresá el saldo y elegí las cuotas.</p>
+      </header>
+      <div class="fields">
+        <div class="field">
+          <label for="balance">Saldo a financiar</label>
+          <div class="amount-input" id="amount-input">
+            <span aria-hidden="true">$</span>
+            <input id="balance" type="text" inputmode="decimal" autocomplete="off" enterkeyhint="done" placeholder="0" maxlength="24" aria-invalid="false">
+            <span class="currency">ARS</span>
+          </div>
+          <p class="input-error" id="amount-error" role="alert" hidden></p>
+        </div>
+        <div class="field">
+          <label for="installments">Cantidad de cuotas</label>
+          <div class="select-field">
+            <select id="installments" disabled><option value="24">24 cuotas</option></select>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+        </div>
+      </div>
+      <section class="result" id="result" aria-labelledby="result-label">
+        <p class="result-label" id="result-label">Valor de cada cuota</p>
+        <div class="result-live" aria-live="polite" aria-atomic="true">
+          <div class="result-amount"><span class="sr-only" id="result-accessible"></span><span id="result-amount">$ —</span></div>
+          <p class="result-terms" id="result-terms">Cargando coeficientes…</p>
+        </div>
+        <div class="coefficient" id="coefficient" hidden><span>Coeficiente aplicado</span><strong id="coefficient-value"></strong></div>
+      </section>
+      <div class="source-error" id="source-error" role="alert" hidden>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+        <div><p id="source-error-text"></p><button type="button" id="retry"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 7a9 9 0 1 0 1 7M20 2v5h-5"/></svg><span id="retry-label">Reintentar</span></button></div>
+      </div>
+      <p class="rounding-note" id="rounding-note">Redondeado al peso, como en la planilla.</p>
+      <footer class="source">
+        <span class="source-dot pending" id="source-dot"></span>
+        <span id="source-label">Leyendo tabla…</span>
+        <span class="source-time" id="source-time"></span>
+      </footer>
+      <noscript><p class="input-error">Activá JavaScript para usar la calculadora.</p></noscript>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,101 @@
+{
+  "sourceLabel": "Tabla de septiembre de 2026",
+  "sourceFile": "Lista de precios sep 2026.xlsx",
+  "sourceSha256": "dc7d3ea25ed963f5cb26681c07aec09b601643f1978b444f640b5f9b8ec489fd",
+  "sheetName": "Table 2",
+  "range": "B4:C26",
+  "rates": [
+    {
+      "installments": 2,
+      "coefficientBps": 5408
+    },
+    {
+      "installments": 3,
+      "coefficientBps": 3745
+    },
+    {
+      "installments": 4,
+      "coefficientBps": 2889
+    },
+    {
+      "installments": 5,
+      "coefficientBps": 2377
+    },
+    {
+      "installments": 6,
+      "coefficientBps": 2037
+    },
+    {
+      "installments": 7,
+      "coefficientBps": 1795
+    },
+    {
+      "installments": 8,
+      "coefficientBps": 1614
+    },
+    {
+      "installments": 9,
+      "coefficientBps": 1473
+    },
+    {
+      "installments": 10,
+      "coefficientBps": 1362
+    },
+    {
+      "installments": 11,
+      "coefficientBps": 1271
+    },
+    {
+      "installments": 12,
+      "coefficientBps": 1196
+    },
+    {
+      "installments": 13,
+      "coefficientBps": 1133
+    },
+    {
+      "installments": 14,
+      "coefficientBps": 1079
+    },
+    {
+      "installments": 15,
+      "coefficientBps": 1033
+    },
+    {
+      "installments": 16,
+      "coefficientBps": 993
+    },
+    {
+      "installments": 17,
+      "coefficientBps": 958
+    },
+    {
+      "installments": 18,
+      "coefficientBps": 927
+    },
+    {
+      "installments": 19,
+      "coefficientBps": 900
+    },
+    {
+      "installments": 20,
+      "coefficientBps": 875
+    },
+    {
+      "installments": 21,
+      "coefficientBps": 854
+    },
+    {
+      "installments": 22,
+      "coefficientBps": 834
+    },
+    {
+      "installments": 23,
+      "coefficientBps": 816
+    },
+    {
+      "installments": 24,
+      "coefficientBps": 800
+    }
+  ]
+}
