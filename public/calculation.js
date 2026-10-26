@@ -21,6 +21,15 @@ export function parseBalance(raw) {
         return null;
     return Number(cents);
 }
+export function calculatePendingBalance(priceCents, advanceCents = 0) {
+    if (!Number.isSafeInteger(priceCents) || priceCents <= 0 || priceCents > MAX_BALANCE_CENTS)
+        throw new Error("Ingresá un precio total válido mayor a cero.");
+    if (!Number.isSafeInteger(advanceCents) || advanceCents < 0 || advanceCents > MAX_BALANCE_CENTS)
+        throw new Error("Ingresá un adelanto válido, mayor o igual a cero.");
+    if (advanceCents > priceCents)
+        throw new Error("El adelanto no puede superar el precio total.");
+    return priceCents - advanceCents;
+}
 export function calculateInstallment(balanceCents, rate) {
     if (!Number.isSafeInteger(balanceCents) || balanceCents <= 0 || balanceCents > MAX_BALANCE_CENTS)
         throw new Error("Ingresá un saldo válido mayor a cero.");
@@ -35,4 +44,5 @@ export function calculateInstallment(balanceCents, rate) {
 }
 export const formatPesos = (pesos) => new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0, minimumFractionDigits: 0 }).format(pesos);
 export const formatBalance = (cents) => new Intl.NumberFormat("es-AR", { maximumFractionDigits: 2, minimumFractionDigits: cents % 100 ? 2 : 0 }).format(cents / 100);
+export const formatMoney = (cents) => new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 2, minimumFractionDigits: cents % 100 ? 2 : 0 }).format(cents / 100);
 export const formatCoefficient = (bps) => new Intl.NumberFormat("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(bps / 100) + "%";

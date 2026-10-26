@@ -1,6 +1,13 @@
 # Calculadora de cuotas de Royal Prestige
 
-Calculadora mínima para el teléfono: ingresá el saldo a financiar, elegí entre 2 y 24 cuotas y obtené el valor de cada cuota. Se publica con acceso libre en Cloudflare Workers; no requiere iniciar sesión en ChatGPT, GitHub ni Google para usarla. El repositorio puede seguir privado.
+Calculadora mínima para el teléfono con dos modos:
+
+- **Solo saldo** (seleccionado al abrir): ingresá el saldo a financiar y elegí entre 2 y 24 cuotas.
+- **Completo**: ingresá el precio total y el adelanto; se muestra automáticamente el saldo pendiente y se calcula la cuota sobre ese saldo. Un adelanto vacío cuenta como cero. No se permite un adelanto mayor al precio total. Si el adelanto cubre todo el precio, se muestra que no queda saldo para financiar.
+
+Los dos modos conservan sus importes mientras cambiás de uno a otro y comparten la cantidad de cuotas elegida, los porcentajes oficiales y el redondeo al peso.
+
+Se publica con acceso libre en Cloudflare Workers; no requiere iniciar sesión en ChatGPT, GitHub ni Google para usarla. El repositorio puede seguir privado.
 
 ## Publicar desde GitHub
 

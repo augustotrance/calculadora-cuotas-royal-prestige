@@ -6,3 +6,13 @@
 .source-dot.unavailable{background:#c68b80}
 
 [hidden]{display:none!important}
+
+.mode-switch{display:grid;grid-template-columns:1fr 1fr;gap:4px;border:0;border-radius:12px;background:#f1f4f6;padding:4px;margin:0 0 26px;min-width:0}
+.mode-switch label{position:relative;cursor:pointer;min-width:0}
+.mode-switch label>span{display:block;padding:11px 8px;border-radius:9px;text-align:center;font-size:13px;font-weight:550;color:#85929c}
+.mode-switch input:checked+span{background:#fff;color:#244552;box-shadow:0 1px 5px #17243c0d}
+.mode-switch input:focus-visible+span{outline:3px solid #b9cfde;outline-offset:1px}
+.pending-balance{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:17px 0;border-top:1px solid #eef0f2;border-bottom:1px solid #eef0f2}
+.pending-balance label{color:#7d8992;font-size:12px;flex-shrink:0}
+.pending-balance output{color:#394e5a;font-size:21px;font-weight:550;letter-spacing:-.5px;text-align:right;overflow-wrap:anywhere;font-variant-numeric:tabular-nums;min-width:0}
+@media(max-width:360px){.pending-balance{gap:10px}.pending-balance output{font-size:19px}}

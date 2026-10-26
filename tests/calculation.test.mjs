@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { calculateInstallment, parseBalance, MAX_BALANCE_CENTS } from '../public/calculation.js';
+import { calculateInstallment, calculatePendingBalance, formatMoney, parseBalance, MAX_BALANCE_CENTS } from '../public/calculation.js';
 import { googleCsvUrl, parseCsv, ratesFromCsv, loadGoogleRates, GoogleSheetAccessError } from '../src/rates-source.js';
 import { loadOfficialRates, OFFICIAL_SHEET_ID } from '../src/official-source.js';
 const official = JSON.parse(await readFile(new URL('./fixtures/september-reference.json', import.meta.url), 'utf8'));
@@ -34,6 +34,34 @@ test('rejects invalid balances, counts, and coefficients', () => {
   for (const b of [0,-1,0.5,NaN,MAX_BALANCE_CENTS+1]) assert.throws(() => calculateInstallment(b, byN(24)));
   assert.throws(() => calculateInstallment(100, {installments:25,coefficientBps:800}));
   assert.throws(() => calculateInstallment(100, {installments:24,coefficientBps:0}));
+});
+
+test('complete mode finances only the pending balance and matches balance-only quotes for every term', () => {
+  const pending = calculatePendingBalance(parseBalance('1.500.000'), parseBalance('500.000'));
+  assert.equal(pending, parseBalance('1.000.000'));
+  for (const rate of rates) {
+    assert.deepEqual(calculateInstallment(pending, rate), calculateInstallment(parseBalance('1.000.000'), rate));
+  }
+  assert.equal(calculateInstallment(pending, byN(24)).installmentPesos, 80000);
+  assert.equal(calculatePendingBalance(100_000_000), 100_000_000);
+  assert.equal(calculatePendingBalance(100_000_000, 0), 100_000_000);
+});
+
+test('the pending balance preserves cents before applying the existing whole-peso installment rounding', () => {
+  const pending = calculatePendingBalance(parseBalance('1.000.000,50'), parseBalance('250.000,25'));
+  assert.equal(pending, 75_000_025);
+  assert.match(formatMoney(pending), /750\.000,25/);
+  assert.equal(calculateInstallment(pending, byN(24)).installmentPesos, 60000);
+  assert.equal(calculatePendingBalance(101, 100), 1);
+});
+
+test('full payment leaves zero to finance; invalid prices and excess or negative advances cannot be quoted', () => {
+  const paid = calculatePendingBalance(100_000_000, 100_000_000);
+  assert.equal(paid, 0);
+  assert.throws(() => calculateInstallment(paid, byN(24)));
+  assert.throws(() => calculatePendingBalance(100, 101), /superar/);
+  for (const price of [0, -1, 1.5, NaN, Infinity, MAX_BALANCE_CENTS + 1]) assert.throws(() => calculatePendingBalance(price, 0));
+  for (const advance of [-1, 0.5, NaN, Infinity, MAX_BALANCE_CENTS + 1]) assert.throws(() => calculatePendingBalance(100, advance));
 });
 
 test('reads the original second-sheet structure, numeric coefficients and formatted percentages', () => {
